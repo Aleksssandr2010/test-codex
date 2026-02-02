@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>DnD Расписание</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <div class="page">
+      <header class="hero">
+        <div>
+          <p class="tag">Партия</p>
+          <h1>Когда играем в DnD?</h1>
+          <p>
+            Соберите доступность игроков, чтобы быстро увидеть, когда больше всего
+            людей могут собраться.
+          </p>
+        </div>
+        <div class="hero-card">
+          <h2>Быстрое действие</h2>
+          <ol>
+            <li>Добавьте доступность.</li>
+            <li>Посмотрите лучшие окна.</li>
+            <li>Договоритесь о сессии.</li>
+          </ol>
+        </div>
+      </header>
+
+      <main class="layout">
+        <section class="panel">
+          <h2>Добавить доступность</h2>
+          <form id="availability-form">
+            <div class="grid">
+              <label>
+                Имя
+                <input type="text" name="name" placeholder="Например, Аня" required />
+              </label>
+              <label>
+                День
+                <select name="day" required>
+                  <option value="">Выберите день</option>
+                  <option>Понедельник</option>
+                  <option>Вторник</option>
+                  <option>Среда</option>
+                  <option>Четверг</option>
+                  <option>Пятница</option>
+                  <option>Суббота</option>
+                  <option>Воскресенье</option>
+                </select>
+              </label>
+              <label>
+                С какого времени
+                <input type="time" name="start" required />
+              </label>
+              <label>
+                До какого времени
+                <input type="time" name="end" required />
+              </label>
+              <label>
+                Часовой пояс
+                <input type="text" name="timezone" placeholder="UTC+3" required />
+              </label>
+            </div>
+            <label class="full">
+              Комментарий
+              <textarea
+                name="notes"
+                rows="3"
+                placeholder="Например, могу только онлайн"
+              ></textarea>
+            </label>
+            <button type="submit">Сохранить</button>
+            <p class="status" id="form-status" aria-live="polite"></p>
+          </form>
+        </section>
+
+        <section class="panel">
+          <h2>Доступность игроков</h2>
+          <div id="slots" class="slot-list"></div>
+        </section>
+
+        <section class="panel">
+          <h2>Лучшие окна</h2>
+          <p class="muted">
+            Топ-окна считаются по 30-минутным слотам. Большее число — больше игроков
+            может сыграть.
+          </p>
+          <div id="suggestions" class="suggestions"></div>
+        </section>
+      </main>
+    </div>
+    <script src="/static/app.js"></script>
+  </body>
+</html>
