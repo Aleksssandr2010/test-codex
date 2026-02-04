@@ -3,93 +3,112 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>DnD Расписание</title>
+    <title>Знаменитые умы Воронежской области</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
     <link rel="stylesheet" href="/static/styles.css" />
   </head>
   <body>
     <div class="page">
       <header class="hero">
         <div>
-          <p class="tag">Партия</p>
-          <h1>Когда играем в DnD?</h1>
+          <p class="tag">География</p>
+          <h1>Интерактивная карта Воронежской области</h1>
           <p>
-            Соберите доступность игроков, чтобы быстро увидеть, когда больше всего
-            людей могут собраться.
+            Исследуйте места рождения известных учёных, писателей, инженеров и
+            просветителей, связанных с Воронежской областью. Нажмите на маркер или
+            выберите карточку справа, чтобы узнать подробности.
           </p>
         </div>
         <div class="hero-card">
-          <h2>Быстрое действие</h2>
+          <h2>Как пользоваться</h2>
           <ol>
-            <li>Добавьте доступность.</li>
-            <li>Посмотрите лучшие окна.</li>
-            <li>Договоритесь о сессии.</li>
+            <li>Используйте поиск, чтобы найти имя.</li>
+            <li>Нажмите на маркер на карте.</li>
+            <li>Откройте карточку с фактами.</li>
           </ol>
         </div>
       </header>
 
       <main class="layout">
-        <section class="panel">
-          <h2>Добавить доступность</h2>
-          <form id="availability-form">
-            <div class="grid">
-              <label>
-                Имя
-                <input type="text" name="name" placeholder="Например, Аня" required />
-              </label>
-              <label>
-                День
-                <select name="day" required>
-                  <option value="">Выберите день</option>
-                  <option>Понедельник</option>
-                  <option>Вторник</option>
-                  <option>Среда</option>
-                  <option>Четверг</option>
-                  <option>Пятница</option>
-                  <option>Суббота</option>
-                  <option>Воскресенье</option>
-                </select>
-              </label>
-              <label>
-                С какого времени
-                <input type="time" name="start" required />
-              </label>
-              <label>
-                До какого времени
-                <input type="time" name="end" required />
-              </label>
-              <label>
-                Часовой пояс
-                <input type="text" name="timezone" placeholder="UTC+3" required />
-              </label>
+        <section class="panel map-panel">
+          <div class="panel-header">
+            <div>
+              <h2>Карта мест рождения</h2>
+              <p class="muted">
+                Воронежская область отмечена точками, где родились знаменитые умы.
+              </p>
             </div>
-            <label class="full">
-              Комментарий
-              <textarea
-                name="notes"
-                rows="3"
-                placeholder="Например, могу только онлайн"
-              ></textarea>
-            </label>
-            <button type="submit">Сохранить</button>
-            <p class="status" id="form-status" aria-live="polite"></p>
-          </form>
+            <div class="stats">
+              <div>
+                <span class="stat-label">Всего точек</span>
+                <strong id="points-count">0</strong>
+              </div>
+              <div>
+                <span class="stat-label">Фильтр</span>
+                <strong id="filter-count">0</strong>
+              </div>
+            </div>
+          </div>
+          <div id="map" class="map" aria-label="Карта Воронежской области"></div>
+          <div class="legend">
+            <span class="legend-dot"></span>
+            Место рождения
+          </div>
         </section>
 
         <section class="panel">
-          <h2>Доступность игроков</h2>
-          <div id="slots" class="slot-list"></div>
+          <h2>Поиск по именам</h2>
+          <label class="search">
+            <span>Поиск</span>
+            <input
+              type="search"
+              id="search"
+              placeholder="Например, Бунин или Новая Чигла"
+              aria-label="Поиск по знаменитым людям"
+            />
+          </label>
+          <div id="people" class="people-list" aria-live="polite"></div>
         </section>
 
         <section class="panel">
-          <h2>Лучшие окна</h2>
+          <h2>О регионе</h2>
           <p class="muted">
-            Топ-окна считаются по 30-минутным слотам. Большее число — больше игроков
-            может сыграть.
+            Воронежская область подарила миру целую плеяду писателей, физиков,
+            инженеров и мыслителей. Карта помогает увидеть, насколько широко
+            география талантов распределена по региону — от Воронежа до малых
+            сёл.
           </p>
-          <div id="suggestions" class="suggestions"></div>
+          <div class="facts">
+            <div>
+              <h3>Темы вкладов</h3>
+              <ul>
+                <li>Литература и публицистика.</li>
+                <li>Физика и технические науки.</li>
+                <li>Исследование космоса и инженерия.</li>
+              </ul>
+            </div>
+            <div>
+              <h3>Идеи для изучения</h3>
+              <ul>
+                <li>Добавьте новые точки с местными героями.</li>
+                <li>Соберите маршруты для культурных поездок.</li>
+                <li>Сопоставьте эпохи и направления.</li>
+              </ul>
+            </div>
+          </div>
         </section>
       </main>
     </div>
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
     <script src="/static/app.js"></script>
   </body>
 </html>
